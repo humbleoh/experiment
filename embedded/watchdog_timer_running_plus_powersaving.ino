@@ -56,6 +56,12 @@ void setup() {
   Serial.begin(9600);
   Serial.print('S');
   wdt_enable(WDTO_4S);
+  WDTCSR |= _BV(WDIE); // first time interrupt, second time reset the cpu
+    // wdt application
+    // 1. disabled
+    // 2. wdt_reset periodically
+    // 3. interrupt
+    // 4. interrupt + reset
 }
 
 void loop() {
@@ -83,7 +89,7 @@ void loop() {
     power_all_enable();
   } else if (v == 'R') {
     Serial.print('r');
-    wdt_reset();
+    //wdt_reset();
     delay(1000);
   }
 }
