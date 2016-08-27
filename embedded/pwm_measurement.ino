@@ -22,8 +22,9 @@ void test() {
   attachInterrupt(digitalPinToInterrupt(2), test2, FALLING);
   int r2 = micros();
   if (r1 > 0) {
-    period = r2 - r1;
-    pulseWidth = f1 - r1;
+    period = r2 - r1; // 没有处理 timer overflow 问题
+    pulseWidth = f1 - r1; // 没有处理 timer overflow 问题
+    //! 没有处理 0 and 255 的场景
     unsigned int dutyCycle = (int32_t) pulseWidth * 255 / period;
     Serial.println(dutyCycle);
     r1 = r2;
